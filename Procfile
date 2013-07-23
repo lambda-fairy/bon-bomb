@@ -1,1 +1,1 @@
-worker: python3 thing.py
+worker: python3 whatsmyip.py
