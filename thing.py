@@ -63,6 +63,7 @@ def regurgitate(status):
 
 def loopdaloop(best_pony):
     cl_name = current_thread().name
+    delay = random()
     print_('Changeling [{}] reporting for duty!', cl_name)
     while True:
         try:
@@ -73,6 +74,10 @@ def loopdaloop(best_pony):
             print('Current votes:')
             regurgitate(status)
             print()
+        except ValueError:  # "No JSON object could be decoded"
+            # The server's down, keep going
+            sleep(delay)
+            delay = min(30*(1+random()), delay*(1+random()))
         except Exception as ex:
             print_('[{}] {}', cl_name, ex)
 
