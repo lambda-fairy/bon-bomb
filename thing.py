@@ -24,10 +24,6 @@ NAMES = ['Twilight Sparkle', 'Rainbow Dash', 'Pinkie Pie', 'Fluttershy', 'Applej
 URL_TEMPLATE = 'http://www.hubworld.com/api/index.php?method=answerPoll&questionId=6cf8294f-e87c-4b73-a59a-75936fc6e678&answerId=6cf8294f-e87c-4b73-a59a-75936fc6e678_{}'
 
 
-def print_(s, *args, **kwds):
-    print(s.format(*args, **kwds))
-
-
 def name_spinner():
     """Yield a bunch of names, all beginning with Bob."""
     for i in count():
@@ -58,37 +54,35 @@ def regurgitate(status):
     entries.sort(key=lambda entry: entry[1], reverse=True)
 
     for pony, count in entries:
-        print_('{:>20}: {:>6}', pony, count)
+        print('{:>20}: {:>6}'.format(pony, count))
 
 
 def loopdaloop(best_pony):
     cl_name = current_thread().name
-    delay = random()
-    print_('Changeling [{}] reporting for duty!', cl_name)
+
+    def log(msg, *args):
+        print('[{}]'.format(cl_name), msg.format(*args))
+
     while True:
+        sleep(random()*3)
         try:
+            log('Sending vote...')
             data = urlopen(interpolate(best_pony)).read()
             status = processify(data)
             print()
-            print_('[{}] Vote for {} locked in!', cl_name, best_pony.upper())
+            log('Vote for {} locked in!', best_pony.upper())
             print('Current votes:')
             regurgitate(status)
             print()
-        except ValueError:  # "No JSON object could be decoded"
-            print_('[{}] Empty response received; sleeping for {} secs', cl_name, delay)
-            sleep(delay)
-            delay = min(30*(1+random()), delay*(1+random()))
         except Exception as ex:
-            print_('[{}] {}', cl_name, type(ex), ex)
+            log('{!r}', ex)
 
 
 if __name__ == '__main__':
     print(__doc__)
-    print_('Preparing to deploy {} changelings', PARALLELIZM)
-    print_('{} is best pony ({})', BEST_PONY,
-            'bwahaha' if BEST_PONY == 'Rarity' else 'traitor!')
+    print('Preparing to deploy {} changelings'.format(PARALLELIZM))
+    print('{} is best pony ({})'.format(BEST_PONY, 'bwahaha' if BEST_PONY == 'Rarity' else 'traitor!'))
     names = name_spinner()
     for i in range(PARALLELIZM):
-        sleep(random()*2)
         changeling = Thread(target=loopdaloop, name=next(names), args=[BEST_PONY])
         changeling.start()
