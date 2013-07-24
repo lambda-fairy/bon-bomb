@@ -75,7 +75,7 @@ def loopdaloop(best_pony):
             regurgitate(status)
             print()
         except ValueError:  # "No JSON object could be decoded"
-            # The server's down, keep going
+            print_('[{}] Empty response received; sleeping for {} secs', cl_name, delay)
             sleep(delay)
             delay = min(30*(1+random()), delay*(1+random()))
         except Exception as ex:
