@@ -75,7 +75,7 @@ def loopdaloop(best_pony):
             regurgitate(status)
             print()
         except Exception as ex:
-            log('{!r}', ex)
+            log('** {!r}', ex)
 
 
 if __name__ == '__main__':
