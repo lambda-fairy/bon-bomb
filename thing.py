@@ -79,7 +79,7 @@ def loopdaloop(best_pony):
             sleep(delay)
             delay = min(30*(1+random()), delay*(1+random()))
         except Exception as ex:
-            print_('[{}] {}', cl_name, ex)
+            print_('[{}] {}', cl_name, type(ex), ex)
 
 
 if __name__ == '__main__':
