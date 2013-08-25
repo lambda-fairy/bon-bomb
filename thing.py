@@ -12,7 +12,7 @@ from threading import Thread, current_thread
 from time import sleep
 from urllib.request import urlopen
 
-BEST_PONY = 'Fluttershy'  # XXX DO NOT CHANGE THIS LINE
+BEST_PONY = 'Applejack'  # XXX DO NOT CHANGE THIS LINE
 
 # Set this too low, and best pony will lose.
 # Set this too high, and your computer crashes.
